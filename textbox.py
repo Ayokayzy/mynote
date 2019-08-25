@@ -8,16 +8,17 @@ Created on Mon Jul 22 18:01:11 2019
 from tkinter import *
 import os
 from tkinter.filedialog import *
+import time;
 window = Tk()
 window.title('textbox')
-
+in_path = ''
 frame = Frame(window, background='sky blue', borderwidth=1)
 frame.pack()
 
-window.title(os.path.asename(in_path)+ ' -myNote' )
+window.title(os.path.basename(in_path)+ ' -myNote' )
 
 #-----------Text box and scrollbar----------------------------
-textbox = Text(frame, height=26 , width=50)
+textbox = Text(frame,height = 42, width = 168,)
 textbox.pack(side=LEFT, expand=YES, fill=BOTH)
 
 scrollbar = Scrollbar(frame, borderwidth=5, orient=VERTICAL,command=textbox.yview)
@@ -26,8 +27,14 @@ scrollbar.pack(side=RIGHT, fill=BOTH)
 textbox.configure(yscrollcommand=scrollbar.set)
 
 #---------menuBar functions----------------------
+def getColor():
+    color = askcolor()
 def newPage():
-	pass
+    global fileName
+    root.title('Untitled Mynote')
+    fileName = None
+    textbox.delete(1.0,'end')
+	
 
 def open_file():
     fileName = askopenfilename(filetypes=[('Text files', '.txt')])
@@ -49,59 +56,61 @@ def exit():
 	window.destroy()
 
 
-	def cut():
-		pass
+def Cut():
+    textbox.event_generate('<<Cut>>')
+		
 
-	def Copy():
-		pass
+def Copy():
+    textbox.event_generate('<<Copy>>')
+		
 
-	def Paste():
-		pass
+def Paste():
+    textbox.event_generate('<<Paste>>')
+		
+def delete():
+    pass
+def find():
+    pass
+def DateTime():
+    localtime = time.asctime(time.localtime(time.time()))
 
-	def delete():
-		pass
 
-	def find():
-		pass
+def find_next():
+    pass
 
-	def find_next():
-		pass
+def replace():
+    pass
 
-	def replace():
-		pass
+def go_to():
+    pass
 
-	def go_to():
-		pass
+def select_all():
+    pass
 
-	def select_all():
-		pass
 
-	def select_all():
-		pass
+def timeNdate():
+    pass
 
-	def timeNdate():
-		pass
+def word_map():
+    pass
 
-	def word_map():
-		pass
+def font():
+    pass
 
-	def font():
-		pass
+def status_bar():
+    pass
 
-	def status_bar():
-		pass
+def view():
+    pass
 
-	def view():
-		pass
+def help():
+    pass
 
-	def help():
-		pass
+def about():
+    pass
 
-	def about():
-		pass
-
-	def notepad():
-		pass
+def notepad():
+    pass
 
 
 #-----------------create all fileMenu optios---------------------
@@ -115,7 +124,7 @@ fileMenu.add_command(label='Open...            Ctrl+O', command=open_file)
 fileMenu.add_command(label='save               ctrl S', command=save_file)
 fileMenu.add_command(label='save As...   crtl+shift+s', command=save_as)
 fileMenu.add_separator()
-fileMenu.add_command(label='Page setup', command= newPage)
+fileMenu.add_command(label='Page setup', command= newPage, accelerator = 'Ctrl+N')
 fileMenu.add_command(label='Print', command=newPage)
 fileMenu.add_separator()
 fileMenu.add_command(label='Exit', command=exit)
@@ -124,18 +133,18 @@ window.config(menu = menubar)
 
 #create file and its submenus
 fileMenu = Menu(menubar, tearoff=0)
-fileMenu.add_command(label='Cut           ctrl x', command=newPage)
-fileMenu.add_command(label='Copy          ctrl c', command=newPage)
-fileMenu.add_command(label='Paste         ctrl v', command=newPage)
+fileMenu.add_command(label='Cut           Ctrl+X', command=Cut, accelerator = 'Ctrl+X')
+fileMenu.add_command(label='Copy          Ctrl+C', command=Copy, accelerator = 'Ctrl+C')
+fileMenu.add_command(label='Paste         Ctrl+V', command=Paste, accelerator = 'Ctrl+V')
 fileMenu.add_command(label='Delete        ctrl d', command=newPage)
 fileMenu.add_separator()
 fileMenu.add_command(label='Find...', command= newPage)
 fileMenu.add_command(label='Find Next', command=newPage)
 fileMenu.add_command(label='Replace...', command=newPage)
-fileMenu.add_command(label='Go To...', command=newPage)
+fileMenu.add_command(label='Go To...', command=getColor)
 fileMenu.add_separator()
 fileMenu.add_command(label='Select All', command=newPage)
-fileMenu.add_command(label='Time/Date', command=newPage)
+fileMenu.add_command(label='Time/Date', command=DateTime)
 menubar.add_cascade(label='Edit', menu=fileMenu, underline=0)
 window.config(menu = menubar)
 
